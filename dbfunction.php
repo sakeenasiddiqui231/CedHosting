@@ -22,12 +22,21 @@ session_start();
                 $_SESSION['login'] = true;  
                 $_SESSION['uid'] = $user_data['id'];  
                 $_SESSION['name'] = $user_data['name'];  
-                $_SESSION['email'] = $user_data['email'];  
-                return TRUE;  
+                $_SESSION['email'] = $user_data['email'];
+                $_SESSION['is_admin'] = $user_data['is_admin'];
+                if ($_SESSION['is_admin'] == '1') 
+                {
+                       header('location:admin/index.php');
+                }  
+                else {  
+                   
+                    echo "<script>alert('You are successfully logged in..Please verify yourself');</script>";
+                    header('refresh:0; url=index.php');
+                }
             }  
             else  
             {  
-                return FALSE;  
+                return '0';  
             }  
         }  
         public function isUserExist($email){ 

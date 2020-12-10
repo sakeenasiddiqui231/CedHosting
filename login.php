@@ -5,7 +5,8 @@ Author URL: http://w3layouts.com
 License: Creative Commons Attribution 3.0 Unported
 License URL: http://creativecommons.org/licenses/by/3.0/
 -->
-<?php 
+<?php
+ 
 include 'config.php'; 
 $data = new Config();  
  
@@ -14,23 +15,16 @@ include_once('dbfunction.php');
     $funObj = new dbfunction();  
     if(isset($_POST['login'])){  
         $email = $_POST['email'];  
-		$password = $_POST['password']; 
+		$password = $_POST['password'];
 		$email1 = md5($email);
-		if($email1 == $email){
-			
-		}
+		
 		
         $user = $funObj->Login($email, $password);  
-        if ($user) {  
-			//  Success 
-			echo "<script>alert('You are successfully logged in..Please verify yourself');</script>";
-            header('refresh:0; url=verify.php');   
-        } else {  
-            //  Failed  
+        if($user == '0') {
 			echo "<script>alert('Emailid / Password Not Match')</script>";
-		    header ('refresh:0; url:login.php');  
-        }  
-    } 
+            header ('refresh:0; url:login.php');
+		}
+	}
 ?>
 <!DOCTYPE HTML>
 <html>
