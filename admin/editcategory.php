@@ -4,31 +4,23 @@ $product = new Product();
 
 $data = new Config(); 
 
-
-if(isset($_POST['submit'])){
-  $prod_parent_id= $_POST['prod_parent_id'];
-  $prod_name = $_POST['prod_name'];
-  $link = $_POST['link'];
-
-  $register = $product->insert_subcategory($prod_parent_id, $prod_name, $link);  
-  if($register)
+$prod_parent= $_GET['parent_id'];
+$name = $_GET['name'];
+$link = $_GET['link'];
+$available = $_GET['available'];
+$id = $_GET['id'];
+if(isset($_POST['update']))
+{
+  $id= $_POST['prod_parent_id'];
+  $p_name = $_POST['prod_name'];
+  $isavailable = $_POST['prod_available'];
+  $update = $product->updatecategory($id, $p_name, $isavailable);
+  if($update)
   {
-    echo "<script>alert('SubCategory Added Successfully')</script>";
+    echo "<script>alert('Subcategory Updated Successfully')</script>";
     header("refresh:0; url=selectcategory.php");
   }
-
-
 }
-
-if(isset($_GET['delete'])) {
-  $id = $_GET['delete'];
-  $delete = $product->deletecategory($id);
-}
-
-
-
-
-
 
 
 ?>
@@ -73,7 +65,7 @@ include './theme/navigation.php';
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Create Category</h1>
+            <h1>Edit Category</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -94,14 +86,14 @@ include './theme/navigation.php';
             <!-- general form elements -->
             <div class="card card-primary">
               <div class="card-header">
-                <h3 class="card-title">Create Category</h3>
+                <h3 class="card-title">Edit Category</h3>
               </div>
               <!-- /.card-header -->
               <!-- form start -->
-              <form role="form" action="" method="POST">
+              <form role="form" action="editcategory" method="POST">
                 <div class="card-body">                  
                   <div class="form-group">
-                  <label>Select Category</label>
+                  <label>Edit Category</label>
                   <select class="form-control select2" style="width: 100%;" name="prod_parent_id">
                 <?php
                   $res = $product->sub_category();
@@ -111,9 +103,6 @@ include './theme/navigation.php';
                     <option value="<?php echo $item['id']; ?>"><?php echo $item['prod_name']; ?></option>
                     <?php
                   }
-
-
-
                 ?>
                     <!-- <option selected="selected">Hosting</option>
                     <option>Alaska</option>
@@ -124,18 +113,20 @@ include './theme/navigation.php';
                     <option>Washington</option> -->
                   </select>
                 </div>
-                <div class="form-group">
+                <div class="form-group" action="" method="POST">
+                
                     <label for="exampleInputEmail1">Sub Category</label>
-                    <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Enter category" name="prod_name">
+                    <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Enter category" name="prod_name" value="<?php echo $name ?>">
                   </div> 
-                  <div class="form-group">
-                    <label for="exampleInputEmail1">Link</label>
-                    <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Enter category" name="link">
-                  </div>                  
+                  <label>Select Availability</label>
+                  <select class="form-control select2" style="width: 100%;" name="prod_available">
+                    <option <?php if($_GET['available'] == 1) { ?> selected <?php ; } ?>>Available</option>
+                    <option <?php if($_GET['available'] == 0) { ?> selected <?php ; } ?>>Not Available</option>
+                    </select>                  
                 </div>
                 <!-- /.card-body -->
                 <div class="card-footer">
-                  <button type="submit" class="btn btn-primary" name="submit">Add SubCategory</button>
+                  <button type="submit" class="btn btn-primary" name="update">Update SubCategory</button>
                 </div>
               </form>
             </div>
@@ -152,95 +143,7 @@ include './theme/navigation.php';
     </section>
 
 
-    <section class="content">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-12">
-            
-            <!-- /.card -->
-
-            <div class="card">
-              <div class="card-header">
-                <h3 class="card-title">List of all the SubCategories</h3>
-              </div>
-              <!-- /.card-header -->
-              <div class="card-body">
-                <table id="example1" class="table table-bordered table-striped">
-                  <thead>
-                  <tr>
-                    <th>Category</th>
-                    <th>SubCategory</th>
-                    <th>Status</th>
-                    <th>Date of Launch</th>
-                    <th>Action</th>
-                  </tr>
-                  </thead>
-                  <tbody class="elements">
-                  <?php
-
-                  $res = $product->table_category();
-                  if($res == '0'){
-                    ?>
-
-                          <tr>
-                              <td class="text-center">data not available</td>
-                          </tr>
-                    <?php
-                  }else{
-                    foreach($res as $element) {
-                      $parent_name = $product->parentname($element['prod_parent_id']);
-                      ?>
-
-                      <tr>
-                           <td>
-                                <?php
-                                    if($parent_name == '0'){
-                                      echo "empty";
-                                    }else{
-                                      foreach ($parent_name as $p_name)
-                                      {
-                                        echo $p_name['prod_name'];
-                                      }
-                                    }
-                                    ?>
-
-
-                                    
-                    </td>
-                    <td><?php echo $element['prod_name']; ?></td>
-                    <td><a href="" <?php if($element['prod_available'] == '1'){ echo 'Available';} else { echo 'Unavailable' ;} ?> class="btn btn-success btn-sm">Available</a></td>
-                    <td><?php echo $element['prod_launch_date']; ?></td>
-                    <td><a href="editcategory.php?parent_id=<?php echo $element['prod_parent_id'] ?>&id=<?php echo $element['id'] ?>&name=<?php echo $element['prod_name'] ?>&link=<?php echo $element['link'] ?>&available=<?php echo $element['prod_available'] ?>" class="btn btn-info btn-sm">Edit</a><a href="selectcategory.php?delete=<?php echo $element['id']; ?>" class="btn btn-danger btn-sm">Delete</a></td>
-                </tr>
-                <?php
-                    }
-                  }
-
-
-
-
-
-
-                    ?>
-
-
-
-
-
-                  
-                  </tfoot>
-                </table>
-              </div>
-              <!-- /.card-body -->
-            </div>
-            <!-- /.card -->
-          </div>
-          <!-- /.col -->
-        </div>
-        <!-- /.row -->
-      </div>
-      <!-- /.container-fluid -->
-    </section>
+    
     <!-- /.content -->
   </div>
   

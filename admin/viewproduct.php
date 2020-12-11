@@ -5,31 +5,6 @@ $product = new Product();
 $data = new Config(); 
 
 
-if(isset($_POST['submit'])){
-  $prod_parent_id= $_POST['prod_parent_id'];
-  $prod_name = $_POST['prod_name'];
-  $link = $_POST['link'];
-
-  $register = $product->insert_subcategory($prod_parent_id, $prod_name, $link);  
-  if($register)
-  {
-    echo "<script>alert('SubCategory Added Successfully')</script>";
-    header("refresh:0; url=selectcategory.php");
-  }
-
-
-}
-
-if(isset($_GET['delete'])) {
-  $id = $_GET['delete'];
-  $delete = $product->deletecategory($id);
-}
-
-
-
-
-
-
 
 ?>
 <!DOCTYPE html>
@@ -73,7 +48,7 @@ include './theme/navigation.php';
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Create Category</h1>
+            <h1>View Products</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -85,71 +60,7 @@ include './theme/navigation.php';
       </div><!-- /.container-fluid -->
     </section>
     <!-- Main content -->
-    <section class="content">
-      <div class="container-fluid">
-        <div class="row">
-          <!-- left column -->
-          <div class="col-md-2 col-lg-2"></div>
-          <div class="col-md-8 col-lg-8">
-            <!-- general form elements -->
-            <div class="card card-primary">
-              <div class="card-header">
-                <h3 class="card-title">Create Category</h3>
-              </div>
-              <!-- /.card-header -->
-              <!-- form start -->
-              <form role="form" action="" method="POST">
-                <div class="card-body">                  
-                  <div class="form-group">
-                  <label>Select Category</label>
-                  <select class="form-control select2" style="width: 100%;" name="prod_parent_id">
-                <?php
-                  $res = $product->sub_category();
-                  foreach($res as $item)
-                  {
-                    ?>
-                    <option value="<?php echo $item['id']; ?>"><?php echo $item['prod_name']; ?></option>
-                    <?php
-                  }
-
-
-
-                ?>
-                    <!-- <option selected="selected">Hosting</option>
-                    <option>Alaska</option>
-                    <option>California</option>
-                    <option>Delaware</option>
-                    <option>Tennessee</option>
-                    <option>Texas</option>
-                    <option>Washington</option> -->
-                  </select>
-                </div>
-                <div class="form-group">
-                    <label for="exampleInputEmail1">Sub Category</label>
-                    <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Enter category" name="prod_name">
-                  </div> 
-                  <div class="form-group">
-                    <label for="exampleInputEmail1">Link</label>
-                    <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Enter category" name="link">
-                  </div>                  
-                </div>
-                <!-- /.card-body -->
-                <div class="card-footer">
-                  <button type="submit" class="btn btn-primary" name="submit">Add SubCategory</button>
-                </div>
-              </form>
-            </div>
-            <!-- /.card -->
-           <!-- /.card -->
-          </div>
-          
-          <!--/.col (left) -->
-          <!-- right column -->        
-          <!--/.col (right) -->
-        </div>
-        <!-- /.row -->
-      </div><!-- /.container-fluid -->
-    </section>
+    
 
 
     <section class="content">
@@ -161,7 +72,7 @@ include './theme/navigation.php';
 
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">List of all the SubCategories</h3>
+                <h3 class="card-title">List of all the Products</h3>
               </div>
               <!-- /.card-header -->
               <div class="card-body">

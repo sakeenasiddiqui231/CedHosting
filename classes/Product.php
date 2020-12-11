@@ -8,7 +8,7 @@ public function sub_category()
         return $query;
         
     }
-public function insert_category($prod_parent_id, $prod_name, $link)
+public function insert_subcategory($prod_parent_id, $prod_name, $link)
 {
     $result = mysqli_query($this->con, "INSERT INTO tbl_product (prod_parent_id ,prod_name, link, prod_available, prod_launch_date) values('$prod_parent_id','$prod_name', '$link', '1', NOW())");
     return $result;
@@ -43,6 +43,55 @@ public function parentname($id)
 
 }
 
+public function deletecategory($id)
+{
+ $query = "DELETE FROM tbl_product WHERE `id` = '$id'";
+ $sql = mysqli_query($this->con, $query);
+ 
+ if($sql)
+ {
+    echo "<script>alert('Record Deleted Successfully');</script>";
+    header('refresh:0; url=selectcategory.php');
+ }
+ else{
+    echo "failed to delete record";
+    
+ }
+
+}
+
+public function updatecategory($id, $p_name, $isavailable)
+{
+$query = "UPDATE tbl_product SET `prod_name`='".$p_name."', `prod_available`='".$isavailable."'
+WHERE `id`='".$id."'";
+
+ $data1 = mysqli_query($this->con, $query);
+if($data1 == true){
+return $query;
+}
+else{
+    return 0;
+}
+}
+
+
+
+function insert_product($prod_parent_id, $prod_name, $link, $mon_price, $annual_price, $sku, $features_encode){
+    $pquery = mysqli_query($this->con, "INSERT INTO `tbl_product`(`prod_parent_id`, `prod_name`, `link`, `prod_available`, `prod_launch_date`) VALUES ('$prod_parent_id', '$prod_name', '$link', '1', NOW())");
+    $id = mysqli_insert_id($this->con);
+    if($pquery){
+        $dquery = mysqli_query($this->con, "INSERT INTO `tbl_product_description`(`prod_id`, `description`, `mon_price`, `annual_price`, `sku`) VALUES ('$id', '$features_encode', '$mon_price', '$annual_price', '$sku')");
+        if($dquery) {
+            echo "<script>alert('Product Inserted successfully');</script>";
+            echo "<script>window.location.href = 'selectcategory.php'; </script>";
+        } else {
+            echo mysqli_error($this->con);
+        }
+    } else {
+        return false;
+    }
+    
+}
 
 
 
@@ -50,8 +99,4 @@ public function parentname($id)
 
 
 }
-
-
-
-
 ?>
