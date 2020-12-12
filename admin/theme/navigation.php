@@ -1,13 +1,10 @@
-
-  <!-- Main Sidebar Container -->
-  <aside class="main-sidebar sidebar-dark-primary elevation-4">
+<aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="index3.html" class="brand-link">
-      <img src="theme/logo.png" style="width:50px;height:90px;margin-top:40px;background-color:white;"
+      <img src="theme/logo.png" 
            class="brand-image img-circle elevation-3">
       <span class="brand-text font-weight-light"></span>
     </a>
-
     <!-- Sidebar -->
     <div class="sidebar">
       <!-- Sidebar user (optional) -->
@@ -17,7 +14,6 @@
           <a href="#" class="d-block"><h3>Admin Panel</h3></a>
         </div>
       </div>
-
       <!-- Sidebar Menu -->
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
@@ -70,7 +66,6 @@
           </li>
           
           
-
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-chart-pie"></i>
@@ -107,8 +102,6 @@
             </ul>
           </li>
           
-
-
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-chart-pie"></i>
@@ -133,7 +126,6 @@
               
             </ul>
           </li>
-
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-chart-pie"></i>
@@ -157,7 +149,6 @@
               </li>
             </ul>
           </li>
-
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-chart-pie"></i>
@@ -182,13 +173,8 @@
             </ul>
           </li>
           
-
           
-
           
-
-
-
           <li class="nav-header">Accounts</li>
           
           <li class="nav-item has-treeview">
@@ -261,10 +247,6 @@
               <p>Logout</p>
             </a>
           </li>
-
-
-
-
           
         </ul>
       </nav>

@@ -5,6 +5,13 @@ $product = new Product();
 $data = new Config(); 
 
 
+if(isset($_GET['delete'])) {
+  $id = $_GET['delete'];
+  $delete = $product->deleteproduct($id);
+}
+
+
+
 
 ?>
 <!DOCTYPE html>
@@ -79,17 +86,24 @@ include './theme/navigation.php';
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
                   <tr>
-                    <th>Category</th>
-                    <th>SubCategory</th>
-                    <th>Status</th>
-                    <th>Date of Launch</th>
+                    <th>Product </th>
+                    <th>Product ID</th>
+                    <th>Monthly Price</th>
+                    <th>Annual Price</th>
+                    <th>SKU</th>
+                    <th>Webspace</th>
+                    <th>Bandwidth</th>
+                    <th>Domain</th>
+                    <th>Language</th>
+                    <th>Mailbox</th>
                     <th>Action</th>
+                    
                   </tr>
                   </thead>
                   <tbody class="elements">
                   <?php
 
-                  $res = $product->table_category();
+                  $res = $product->view_table();
                   if($res == '0'){
                     ?>
 
@@ -106,6 +120,7 @@ include './theme/navigation.php';
                            <td>
                                 <?php
                                     if($parent_name == '0'){
+
                                       echo "empty";
                                     }else{
                                       foreach ($parent_name as $p_name)
@@ -114,31 +129,36 @@ include './theme/navigation.php';
                                       }
                                     }
                                     ?>
-
-
                                     
                     </td>
-                    <td><?php echo $element['prod_name']; ?></td>
-                    <td><a href="" <?php if($element['prod_available'] == '1'){ echo 'Available';} else { echo 'Unavailable' ;} ?> class="btn btn-success btn-sm">Available</a></td>
-                    <td><?php echo $element['prod_launch_date']; ?></td>
-                    <td><a href="editcategory.php?parent_id=<?php echo $element['prod_parent_id'] ?>&id=<?php echo $element['id'] ?>&name=<?php echo $element['prod_name'] ?>&link=<?php echo $element['link'] ?>&available=<?php echo $element['prod_available'] ?>" class="btn btn-info btn-sm">Edit</a><a href="selectcategory.php?delete=<?php echo $element['id']; ?>" class="btn btn-danger btn-sm">Delete</a></td>
+                    <td><?php echo $element['prod_id']; ?></td>
+                     <td><?php echo $element['mon_price']; ?></td>
+                     <td><?php echo $element['annual_price']; ?></td>
+                     <td><?php echo $element['sku']; ?></td>
+                     <?php
+                     $result = json_decode($element['description']);
+                         ?>
+                      <td><?php echo $result->webspace;  ?></td>
+                      <td><?php echo $result->bandwidth;  ?></td>
+                      <td><?php echo $result->domain;  ?></td>
+                      <td><?php echo $result->language;  ?></td>
+                      <td><?php echo $result->mailbox;  ?></td>
+
+                      <?php
+                      $res = json_encode($result);
+                      
+                      
+                      ?>
+                      
+                    <td><a href="editproduct.php?m_price=<?php echo $element['mon_price'] ?>&a_price=<?php echo $element['annual_price'] ?>&sku=<?php echo $element['sku'] ?>&description=<?php echo $res ?> " class="btn btn-success btn-sm">Edit</a>
+                    <a href="viewproduct.php?delete=<?php echo $element['prod_id']; ?>" class="btn btn-danger btn-sm">Delete</a></td> 
                 </tr>
                 <?php
                     }
                   }
 
-
-
-
-
-
                     ?>
-
-
-
-
-
-                  
+                 
                   </tfoot>
                 </table>
               </div>

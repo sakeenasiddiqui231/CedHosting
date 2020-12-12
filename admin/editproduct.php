@@ -4,27 +4,14 @@ $product = new Product();
 
 $data = new Config(); 
 
-
-if(isset($_POST['submit'])){
-  $prod_parent_id= $_POST['prod_parent_id'];
-  $prod_name = $_POST['prod_name'];
-  $link = $_POST['link'];
-  $mon_price = $_POST['mon_price'];
-  $annual_price = $_POST['annual_price'];
-  $sku = $_POST['sku'];
-
-
-  $webspace = $_POST['webspace'];
-  $bandwidth = $_POST['bandwidth'];
-  $domain = $_POST['domain'];
-  $language = $_POST['language'];
-  $mailbox = $_POST['mailbox'];
-
-
-  $contain = array("webspace" => $webspace, "bandwidth" => $bandwidth, "domain" => $domain, "language" => $language, "mailbox" => $mailbox);
-  $features_encode = json_encode($contain);
-  $register = $product->insert_product($prod_parent_id, $prod_name, $link, $mon_price, $annual_price, $sku, $features_encode);  
+if(isset($_GET))
+{
+    $mon_price= $_GET['m_price'];
+    $annual_price= $_GET['a_price'];
+    $sku= $_GET['sku'];
 }
+
+
 
 
 ?>
@@ -70,7 +57,7 @@ include './theme/navigation.php';
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Create New Product</h1>
+            <h1>Edit Product</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -97,75 +84,52 @@ include './theme/navigation.php';
               <!-- /.card-header -->
               <form method="POST">
               <div class="card-body">
-              <div class="form-group">
-                  <label for="exampleSelectRounded0">Select Product Category<span>*</span></label>
-                  <select class="custom-select rounded-0" id="exampleSelectRounded0" name="prod_parent_id">
-                  <?php
-                  $res = $product->table_category();
-                  foreach($res as $item)
-                  {
-                    ?>
-                    <option value="<?php echo $item['id']; ?>"><?php echo $item['prod_name']; ?></option>
-                    <?php
-                  }
-                ?>
-                    <!-- <option>Please Select</option>
-                    <option>Value 2</option>
-                    <option>Value 3</option> -->
-                  </select>
-                </div>
-                <div class="form-group">
-                  <label for="exampleInputRounded0">Enter Product Name<span>*</span></label>
-                  <input type="text" class="form-control rounded-0" id="exampleInputRounded0"  name="prod_name" required>
-                </div>
-                <div class="form-group">
-                  <label for="exampleInputRounded0">Page URL<span>*</span></label>
-                  <input type="text" class="form-control rounded-0" id="exampleInputRounded0" name="link" required>
-                </div>
-                              
-                <hr class="my-4"><br>
+              
+               
+                
+                <hr class="my-4">
                 <h4>Product Description</h4>
                 <h6><b>Enter Product Description Below</b></h6>
                 <hr class="my-4">
                 <div class="form-group">
                   <label for="exampleInputRounded0">Enter Monthly Price<span>*</span></label>
-                  <input type="text" class="form-control rounded-0" id="exampleInputRounded0" placeholder="" name="mon_price" required>
+                  <input type="text" class="form-control rounded-0"  name="mon_price" value="<?php echo $mon_price ?>">
                   <p> This would be Monthly Plan</p>
                 </div>
                 <div class="form-group">
                   <label for="exampleInputRounded0">Enter Annual Price<span>*</span></label>
-                  <input type="text" class="form-control rounded-0" id="exampleInputRounded0" placeholder="ex:23" name="annual_price" required>
+                  <input type="text" class="form-control rounded-0"  name="annual_price" value="<?php echo $annual_price ?>">
                 </div>
                 <div class="form-group">
                   <label for="exampleInputRounded0">SKU<span>*</span></label>
-                  <input type="text" class="form-control rounded-0" id="exampleInputRounded0" placeholder="" name="sku" required>
+                  <input type="text" class="form-control rounded-0"  name="sku" value="<?php echo $sku ?>">
                 </div>
                 <hr class="my-4"><br>
                 <h4>Features</h4>
                 <hr class="my-4">
                 <div class="form-group">
                   <label for="exampleInputRounded0">Web Space(in GB)<span>*</span></label>
-                  <input type="text" class="form-control rounded-0" id="exampleInputRounded0" placeholder="" name="webspace" required>
+                  <input type="text" class="form-control rounded-0"  name="webspace">
                   <p> Enter 0.5 for 512 MB</p>
                 </div>
                 <div class="form-group">
                   <label for="exampleInputRounded0">Bandwidth (in GB)<span>*</span></label>
-                  <input type="text" class="form-control rounded-0" id="exampleInputRounded0" placeholder="" name="bandwidth" required>
+                  <input type="text" class="form-control rounded-0"  name="bandwidth">
                   <p> Enter 0.5 for 512 MB</p>
                 </div>
                 <div class="form-group">
                   <label for="exampleInputRounded0">Free Domain<span>*</span></label>
-                  <input type="text" class="form-control rounded-0" id="exampleInputRounded0" placeholder="" name="domain" required>
+                  <input type="text" class="form-control rounded-0"  name="domain">
                   <p> Enter 0 if no domain available in this service</p>
                 </div>
                 <div class="form-group">
                   <label for="exampleInputRounded0">Language / Technology Support<span>*</span></label>
-                  <input type="text" class="form-control rounded-0" id="exampleInputRounded0" placeholder="" name="language" required>
+                  <input type="text" class="form-control rounded-0"  name="language">
                   <p> Separate by (,) Ex:PHP, MYSQL, MongoDB</p>
                 </div>
                 <div class="form-group">
                   <label for="exampleInputRounded0">Mailbox<span>*</span></label>
-                  <input type="text" class="form-control rounded-0" id="exampleInputRounded0" placeholder="" name="mailbox" required>
+                  <input type="text" class="form-control rounded-0"  name="mailbox">
                   <p> Enter Number or mailbox will be provided, enter 0 if none</p>
                 </div>
                 <hr class="my-4"><br>

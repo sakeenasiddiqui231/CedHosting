@@ -3,18 +3,22 @@ include('../classes/Product.php');
 $product = new Product();
 
 $data = new Config(); 
-
+if(isset($_GET))
+{
 $prod_parent= $_GET['parent_id'];
 $name = $_GET['name'];
 $link = $_GET['link'];
 $available = $_GET['available'];
 $id = $_GET['id'];
+}
 if(isset($_POST['update']))
 {
-  $id= $_POST['prod_parent_id'];
+  $id= $_POST['prod_id'];
   $p_name = $_POST['prod_name'];
+  $link = $_POST['link'];
   $isavailable = $_POST['prod_available'];
-  $update = $product->updatecategory($id, $p_name, $isavailable);
+  $update = $product->updatecategory($id, $p_name, $isavailable, $link);
+ 
   if($update)
   {
     echo "<script>alert('Subcategory Updated Successfully')</script>";
@@ -90,7 +94,7 @@ include './theme/navigation.php';
               </div>
               <!-- /.card-header -->
               <!-- form start -->
-              <form role="form" action="editcategory" method="POST">
+              <form role="form"  method="POST">
                 <div class="card-body">                  
                   <div class="form-group">
                   <label>Edit Category</label>
@@ -114,14 +118,16 @@ include './theme/navigation.php';
                   </select>
                 </div>
                 <div class="form-group" action="" method="POST">
-                
+                  <input type="hidden"  name="prod_id" value="<?php echo $id ?>">
                     <label for="exampleInputEmail1">Sub Category</label>
-                    <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Enter category" name="prod_name" value="<?php echo $name ?>">
+                    <input type="text" class="form-control" id="exampleInputEmail1"  name="prod_name" value="<?php echo $name ?>">
+                    <label for="exampleInputEmail1">Link URL</label>
+                    <input type="text" class="form-control" id="exampleInputEmail1"  name="link" value="<?php echo $link ?>">
                   </div> 
                   <label>Select Availability</label>
                   <select class="form-control select2" style="width: 100%;" name="prod_available">
-                    <option <?php if($_GET['available'] == 1) { ?> selected <?php ; } ?>>Available</option>
-                    <option <?php if($_GET['available'] == 0) { ?> selected <?php ; } ?>>Not Available</option>
+                    <option  value = '1' <?php if($_GET['available'] == 1) { ?> selected <?php ; } ?>>Available</option>
+                    <option value = '0' <?php if($_GET['available'] == 0) { ?> selected <?php ; } ?>>Not Available</option>
                     </select>                  
                 </div>
                 <!-- /.card-body -->

@@ -1,3 +1,6 @@
+
+
+
 <?php
 include('../classes/Product.php');
 $product = new Product();
@@ -129,7 +132,7 @@ include './theme/navigation.php';
                     <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Enter category" name="prod_name">
                   </div> 
                   <div class="form-group">
-                    <label for="exampleInputEmail1">Link</label>
+                    <label for="exampleInputEmail1">Link URL</label>
                     <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Enter category" name="link">
                   </div>                  
                 </div>
@@ -150,8 +153,6 @@ include './theme/navigation.php';
         <!-- /.row -->
       </div><!-- /.container-fluid -->
     </section>
-
-
     <section class="content">
       <div class="container-fluid">
         <div class="row">
@@ -202,32 +203,17 @@ include './theme/navigation.php';
                                         echo $p_name['prod_name'];
                                       }
                                     }
-                                    ?>
-
-
-                                    
+                                    ?>                                   
                     </td>
                     <td><?php echo $element['prod_name']; ?></td>
-                    <td><a href="" <?php if($element['prod_available'] == '1'){ echo 'Available';} else { echo 'Unavailable' ;} ?> class="btn btn-success btn-sm">Available</a></td>
+                    <td> <?php if($element['prod_available'] == '1'){ echo 'Available';} else { echo 'Unavailable' ;} ?> </td>
                     <td><?php echo $element['prod_launch_date']; ?></td>
-                    <td><a href="editcategory.php?parent_id=<?php echo $element['prod_parent_id'] ?>&id=<?php echo $element['id'] ?>&name=<?php echo $element['prod_name'] ?>&link=<?php echo $element['link'] ?>&available=<?php echo $element['prod_available'] ?>" class="btn btn-info btn-sm">Edit</a><a href="selectcategory.php?delete=<?php echo $element['id']; ?>" class="btn btn-danger btn-sm">Delete</a></td>
+                    <td><a href="editcategory.php?parent_id=<?php echo $element['prod_parent_id'] ?>&id=<?php echo $element['id'] ?>&name=<?php echo $element['prod_name'] ?>&link=<?php echo $element['link'] ?>&available=<?php echo $element['prod_available'] ?>$link=<?php echo $element['link'] ?>" class="btn btn-success btn-sm">Edit</a><a href="selectcategory.php?delete=<?php echo $element['id']; ?>" class="btn btn-danger btn-sm">Delete</a></td>
                 </tr>
                 <?php
                     }
                   }
-
-
-
-
-
-
-                    ?>
-
-
-
-
-
-                  
+                    ?>                 
                   </tfoot>
                 </table>
               </div>
