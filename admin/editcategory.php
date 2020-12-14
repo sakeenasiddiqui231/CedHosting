@@ -15,7 +15,7 @@ if(isset($_POST['update']))
 {
   $id= $_POST['prod_id'];
   $p_name = $_POST['prod_name'];
-  $link = $_POST['link'];
+  $link = $_POST['html'];
   $isavailable = $_POST['prod_available'];
   $update = $product->updatecategory($id, $p_name, $isavailable, $link);
  
@@ -122,7 +122,7 @@ include './theme/navigation.php';
                     <label for="exampleInputEmail1">Sub Category</label>
                     <input type="text" class="form-control" id="exampleInputEmail1"  name="prod_name" value="<?php echo $name ?>">
                     <label for="exampleInputEmail1">Link URL</label>
-                    <input type="text" class="form-control" id="exampleInputEmail1"  name="link" value="<?php echo $link ?>">
+                    <input type="text" class="form-control" id="exampleInputEmail1"  name="html" value="<?php echo $link ?>">
                   </div> 
                   <label>Select Availability</label>
                   <select class="form-control select2" style="width: 100%;" name="prod_available">

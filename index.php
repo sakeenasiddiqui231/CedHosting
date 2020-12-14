@@ -4,6 +4,9 @@ Author URL: http://w3layouts.com
 License: Creative Commons Attribution 3.0 Unported
 License URL: http://creativecommons.org/licenses/by/3.0/
 -->
+
+
+
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -49,7 +52,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	<!---header--->
 	<?php
 
-					include 'header.php';
+					include_once 'header.php';
 
 	?>
 		

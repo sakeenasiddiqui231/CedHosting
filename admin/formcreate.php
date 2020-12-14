@@ -8,7 +8,7 @@ $data = new Config();
 if(isset($_POST['submit'])){
   $prod_parent_id= $_POST['prod_parent_id'];
   $prod_name = $_POST['prod_name'];
-  $link = $_POST['link'];
+  $link = $_POST['html'];
   $mon_price = $_POST['mon_price'];
   $annual_price = $_POST['annual_price'];
   $sku = $_POST['sku'];
@@ -99,7 +99,7 @@ include './theme/navigation.php';
               <div class="card-body">
               <div class="form-group">
                   <label for="exampleSelectRounded0">Select Product Category<span>*</span></label>
-                  <select class="custom-select rounded-0" id="exampleSelectRounded0" name="prod_parent_id">
+                  <select class="custom-select rounded-0" id="product_category" name="prod_parent_id">
                   <?php
                   $res = $product->table_category();
                   foreach($res as $item)
@@ -113,14 +113,17 @@ include './theme/navigation.php';
                     <option>Value 2</option>
                     <option>Value 3</option> -->
                   </select>
+                  <div id="product_categoryError"></div>
                 </div>
                 <div class="form-group">
                   <label for="exampleInputRounded0">Enter Product Name<span>*</span></label>
-                  <input type="text" class="form-control rounded-0" id="exampleInputRounded0"  name="prod_name" required>
+                  <input type="text" class="form-control rounded-0" id="product_name"  name="prod_name" required>
+                  <div id="product_nameError"></div>
                 </div>
                 <div class="form-group">
-                  <label for="exampleInputRounded0">Page URL<span>*</span></label>
-                  <input type="text" class="form-control rounded-0" id="exampleInputRounded0" name="link" required>
+                  <label for="exampleInputRounded0">Page URL<span></span></label>
+                  <input type="text" class="form-control rounded-0" id="page_url" name="html" required>
+                  <div id="page_urlError"></div>
                 </div>
                               
                 <hr class="my-4"><br>
@@ -129,43 +132,52 @@ include './theme/navigation.php';
                 <hr class="my-4">
                 <div class="form-group">
                   <label for="exampleInputRounded0">Enter Monthly Price<span>*</span></label>
-                  <input type="text" class="form-control rounded-0" id="exampleInputRounded0" placeholder="" name="mon_price" required>
+                  <input type="text" class="form-control rounded-0" id="monthlyPrice"  name="mon_price" pattern='([0-9]+(\.[0-9]+)?)' required>
+                  <div id="monthlyPriceError"></div>
                   <p> This would be Monthly Plan</p>
                 </div>
                 <div class="form-group">
                   <label for="exampleInputRounded0">Enter Annual Price<span>*</span></label>
-                  <input type="text" class="form-control rounded-0" id="exampleInputRounded0" placeholder="ex:23" name="annual_price" required>
+                  <input type="text" class="form-control rounded-0" id="annualPrice" placeholder="ex:23" name="annual_price"  pattern='([0-9]+(\.[0-9]+)?)' required>
+                  <div id="annualPriceError"></div>
                 </div>
                 <div class="form-group">
                   <label for="exampleInputRounded0">SKU<span>*</span></label>
-                  <input type="text" class="form-control rounded-0" id="exampleInputRounded0" placeholder="" name="sku" required>
+                  <input type="text" class="form-control rounded-0" id="sku"  name="sku" pattern="^[a-zA-Z0-9#](?:[a-zA-Z0-9_-]*[a-zA-Z0-9])?$" required>
+                  <div id="skuError"></div>
                 </div>
+                
                 <hr class="my-4"><br>
                 <h4>Features</h4>
                 <hr class="my-4">
                 <div class="form-group">
                   <label for="exampleInputRounded0">Web Space(in GB)<span>*</span></label>
-                  <input type="text" class="form-control rounded-0" id="exampleInputRounded0" placeholder="" name="webspace" required>
+                  <input type="text" class="form-control rounded-0" id="web_space"  name="webspace" pattern='([0-9]+(\.[0-9]+)?)' required>
+                  <div id="web_spaceError"></div>
                   <p> Enter 0.5 for 512 MB</p>
                 </div>
                 <div class="form-group">
                   <label for="exampleInputRounded0">Bandwidth (in GB)<span>*</span></label>
-                  <input type="text" class="form-control rounded-0" id="exampleInputRounded0" placeholder="" name="bandwidth" required>
+                  <input type="text" class="form-control rounded-0" id="bandwidth_space"  name="bandwidth"  pattern='([0-9]+(\.[0-9]+)?)' required>
+                  <div id="bandwidth_spaceError"></div>
                   <p> Enter 0.5 for 512 MB</p>
                 </div>
                 <div class="form-group">
                   <label for="exampleInputRounded0">Free Domain<span>*</span></label>
-                  <input type="text" class="form-control rounded-0" id="exampleInputRounded0" placeholder="" name="domain" required>
+                  <input type="text" class="form-control rounded-0" id="domain"  name="domain" pattern="((^[0-9]*$)|(^[A-Za-z]+$))" required>
+                  <div id="domainError"></div>
                   <p> Enter 0 if no domain available in this service</p>
                 </div>
                 <div class="form-group">
                   <label for="exampleInputRounded0">Language / Technology Support<span>*</span></label>
-                  <input type="text" class="form-control rounded-0" id="exampleInputRounded0" placeholder="" name="language" required>
+                  <input type="text" class="form-control rounded-0" id="language"  name="language" required>
+                  <div id="languageError"></div>
                   <p> Separate by (,) Ex:PHP, MYSQL, MongoDB</p>
                 </div>
                 <div class="form-group">
                   <label for="exampleInputRounded0">Mailbox<span>*</span></label>
-                  <input type="text" class="form-control rounded-0" id="exampleInputRounded0" placeholder="" name="mailbox" required>
+                  <input type="text" class="form-control rounded-0" id="mailbox"  name="mailbox" pattern="((^[0-9]*$)|(^[A-Za-z]+$))" required>
+                  <div id="mailboxError"></div>
                   <p> Enter Number or mailbox will be provided, enter 0 if none</p>
                 </div>
                 <hr class="my-4"><br>
@@ -199,6 +211,27 @@ include './theme/navigation.php';
     </div>
     <strong>Copyright &copy; 2014-2020 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights reserved.
   </footer>
+  <script>
+            function errors(id) {
+                var input = document.getElementById(id);
+                var inputValue = input.value;
+                if (input.id == "monthlyPrice") {
+                    if (input.value.length > input.maxLength) input.value = input.value.slice(0, input.maxLength);
+                }
+                if (inputValue == '') {
+                    input.classList.add('div-error');
+                    var error = id+"Error";
+                    document.getElementById(error).innerHTML = '<div class="form-error-message"><i class="fa fa-exclamation-circle"></i> This field is required.</div>';
+                    document.getElementById("submit").setAttribute("disabled", "true");
+                }
+                else {
+                    var error = id+"Error";
+                    document.getElementById(error).innerHTML= '';
+                    input.classList.remove('div-error'); 
+                    document.getElementById("submit").removeAttribute("disabled");
+                }
+            } 
+            </script> 
 
   <!-- Control Sidebar -->
   <aside class="control-sidebar control-sidebar-dark">

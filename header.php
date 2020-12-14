@@ -1,5 +1,9 @@
 <?php
 
+require_once 'classes/Product.php';
+$product = new Product();
+$data = new Config();  
+
 $path = basename($_SERVER['REQUEST_URI']);
 
 if($path == 'linuxhosting.php' || $path == 'wordpresshosting.php' || $path == 'windowhosting.php' || $path == 'cmshosting.php'){
@@ -41,6 +45,20 @@ $path = 'menu';
 								<li class="dropdown <?php if($path == 'menu'){ echo 'active' ;}?>">
 									<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Hosting<i class="caret"></i></a>
 									<ul class="dropdown-menu">
+
+										<?php
+										 $result = $product->sub_category();
+										 foreach($result as $item)
+										 {
+											?>
+											<a href="<?php echo $item['html']; ?>"><?php echo $item['prod_name']; ?>"</a>
+											<?php
+										  }   
+                                          
+									?>
+
+
+
 										<li>
 											<a href="linuxhosting.php">Linux hosting</a></li>
 										<li>

@@ -1,6 +1,4 @@
 
-
-
 <?php
 include('../classes/Product.php');
 $product = new Product();
@@ -9,30 +7,21 @@ $data = new Config();
 
 
 if(isset($_POST['submit'])){
-  $prod_parent_id= $_POST['prod_parent_id'];
+  //$prod_parent_id= $_POST['prod_parent_id'];
   $prod_name = $_POST['prod_name'];
-  $link = $_POST['link'];
+  $link = $_POST['html'];
 
-  $register = $product->insert_subcategory($prod_parent_id, $prod_name, $link);  
+  $register = $product->insert_subcategory($prod_name, $link);  
   if($register)
   {
     echo "<script>alert('SubCategory Added Successfully')</script>";
     header("refresh:0; url=selectcategory.php");
   }
-
-
 }
-
 if(isset($_GET['delete'])) {
   $id = $_GET['delete'];
   $delete = $product->deletecategory($id);
 }
-
-
-
-
-
-
 
 ?>
 <!DOCTYPE html>
@@ -105,7 +94,7 @@ include './theme/navigation.php';
                 <div class="card-body">                  
                   <div class="form-group">
                   <label>Select Category</label>
-                  <select class="form-control select2" style="width: 100%;" name="prod_parent_id">
+                  <select class="form-control select2" style="width: 100%;" name="prod_parent_id" >
                 <?php
                   $res = $product->sub_category();
                   foreach($res as $item)
@@ -133,7 +122,7 @@ include './theme/navigation.php';
                   </div> 
                   <div class="form-group">
                     <label for="exampleInputEmail1">Link URL</label>
-                    <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Enter category" name="link">
+                    <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Enter category" name="html">
                   </div>                  
                 </div>
                 <!-- /.card-body -->
@@ -208,7 +197,7 @@ include './theme/navigation.php';
                     <td><?php echo $element['prod_name']; ?></td>
                     <td> <?php if($element['prod_available'] == '1'){ echo 'Available';} else { echo 'Unavailable' ;} ?> </td>
                     <td><?php echo $element['prod_launch_date']; ?></td>
-                    <td><a href="editcategory.php?parent_id=<?php echo $element['prod_parent_id'] ?>&id=<?php echo $element['id'] ?>&name=<?php echo $element['prod_name'] ?>&link=<?php echo $element['link'] ?>&available=<?php echo $element['prod_available'] ?>$link=<?php echo $element['link'] ?>" class="btn btn-success btn-sm">Edit</a><a href="selectcategory.php?delete=<?php echo $element['id']; ?>" class="btn btn-danger btn-sm">Delete</a></td>
+                    <td><a href="editcategory.php?parent_id=<?php echo $element['prod_parent_id'] ?>&id=<?php echo $element['id'] ?>&name=<?php echo $element['prod_name'] ?>&link=<?php echo $element['html'] ?>&available=<?php echo $element['prod_available'] ?>" class="btn btn-success btn-sm">Edit</a><a href="selectcategory.php?delete=<?php echo $element['id']; ?>" class="btn btn-danger btn-sm">Delete</a></td>
                 </tr>
                 <?php
                     }

@@ -4,13 +4,57 @@ $product = new Product();
 
 $data = new Config(); 
 
-if(isset($_GET))
+if(isset($_GET['id']))
 {
-    $mon_price= $_GET['m_price'];
-    $annual_price= $_GET['a_price'];
-    $sku= $_GET['sku'];
+   
+   $edit_product = $product->editproduct($_GET['id']);
+   //print_r( $edit_product);
+   $res = mysqli_fetch_assoc($edit_product);
+   $id = $res['prod_id'];
+  
+   $p_name = $res['prod_name'];
+   $p_url = $res['html'];
+   $sku = $res['sku'];
+   $mon_price = $res['mon_price'];
+   $avail = $res['prod_available'];
+   $annual_price = $res['annual_price'];
+   $description = $res['description'];
+   $result = json_decode($res['description']);
+    
+   
+}
+if(isset($_POST['update']))
+{ 
+  
+  $m_price = $_POST['mon_price'];
+  $a_price = $_POST['annual_price'];
+  $sku = $_POST['sku'];
+  $prod_name = $_POST['prod_name'];
+  
+  $html = $_POST['html'];
+  $webspace = $_POST['webspace'];
+  $bandwidth = $_POST['bandwidth'];
+  $domain = $_POST['domain'];
+  $language = $_POST['language'];
+  $mailbox = $_POST['mailbox'];
+
+  $contain = array("webspace" => $webspace, "bandwidth" => $bandwidth, "domain" => $domain, "language" => $language, "mailbox" => $mailbox);
+  $features_encode = json_encode($contain);
+
+  $update = $product->updateproduct($m_price, $a_price, $sku, $features_encode, $id, $prod_name, $html);
+ 
+  if($update)
+  {
+    echo "<script>alert('Product Updated Successfully')</script>";
+    header("refresh:0; url=viewproduct.php");
+  }
+
 }
 
+  
+    
+   
+  
 
 
 
@@ -84,8 +128,15 @@ include './theme/navigation.php';
               <!-- /.card-header -->
               <form method="POST">
               <div class="card-body">
-              
                
+              <div class="form-group">
+                  <label for="exampleInputRounded0">Enter Product Name<span>*</span></label>
+                  <input type="text" class="form-control rounded-0" id=""  name="prod_name" value="<?php echo $p_name ?>" required>
+                </div>
+                <div class="form-group">
+                  <label for="exampleInputRounded0">Page URL<span></span></label>
+                  <input type="text" class="form-control rounded-0" id="" name="html" value="<?php echo $p_url ?>" required>
+                </div>
                 
                 <hr class="my-4">
                 <h4>Product Description</h4>
@@ -109,32 +160,32 @@ include './theme/navigation.php';
                 <hr class="my-4">
                 <div class="form-group">
                   <label for="exampleInputRounded0">Web Space(in GB)<span>*</span></label>
-                  <input type="text" class="form-control rounded-0"  name="webspace">
+                  <input type="text" class="form-control rounded-0"  name="webspace" value="<?php echo $result->webspace;  ?>">
                   <p> Enter 0.5 for 512 MB</p>
                 </div>
                 <div class="form-group">
                   <label for="exampleInputRounded0">Bandwidth (in GB)<span>*</span></label>
-                  <input type="text" class="form-control rounded-0"  name="bandwidth">
+                  <input type="text" class="form-control rounded-0"  name="bandwidth" value="<?php echo $result->bandwidth;  ?>">
                   <p> Enter 0.5 for 512 MB</p>
                 </div>
                 <div class="form-group">
                   <label for="exampleInputRounded0">Free Domain<span>*</span></label>
-                  <input type="text" class="form-control rounded-0"  name="domain">
+                  <input type="text" class="form-control rounded-0"  name="domain" value="<?php echo $result->domain;  ?>">
                   <p> Enter 0 if no domain available in this service</p>
                 </div>
                 <div class="form-group">
                   <label for="exampleInputRounded0">Language / Technology Support<span>*</span></label>
-                  <input type="text" class="form-control rounded-0"  name="language">
+                  <input type="text" class="form-control rounded-0"  name="language" value="<?php echo $result->language;  ?>">
                   <p> Separate by (,) Ex:PHP, MYSQL, MongoDB</p>
                 </div>
                 <div class="form-group">
                   <label for="exampleInputRounded0">Mailbox<span>*</span></label>
-                  <input type="text" class="form-control rounded-0"  name="mailbox">
+                  <input type="text" class="form-control rounded-0"  name="mailbox" value="<?php echo $result->mailbox;  ?>">
                   <p> Enter Number or mailbox will be provided, enter 0 if none</p>
                 </div>
-                <hr class="my-4"><br>
+                <hr class="my-4"><br> 
                 <div class="card-footer">
-                  <button type="submit" class="btn btn-primary" name="submit" >Create Now</button>
+                  <button type="submit" class="btn btn-primary" name="update" >Update Now</button>
                 </div>
               </div>
                 </form>

@@ -1,3 +1,12 @@
+<?php
+session_start();
+
+if ($_SESSION['is_admin'] == '0') {
+        header('location: ./index.php');
+    }
+    
+?>
+
 
 <!DOCTYPE html>
 <html lang="en">

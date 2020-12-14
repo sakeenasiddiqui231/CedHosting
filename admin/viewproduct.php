@@ -144,13 +144,9 @@ include './theme/navigation.php';
                       <td><?php echo $result->language;  ?></td>
                       <td><?php echo $result->mailbox;  ?></td>
 
-                      <?php
-                      $res = json_encode($result);
                       
                       
-                      ?>
-                      
-                    <td><a href="editproduct.php?m_price=<?php echo $element['mon_price'] ?>&a_price=<?php echo $element['annual_price'] ?>&sku=<?php echo $element['sku'] ?>&description=<?php echo $res ?> " class="btn btn-success btn-sm">Edit</a>
+                    <td><a href="editproduct.php?id=<?php echo $element['prod_id'] ?>" class="btn btn-success btn-sm">Edit</a>
                     <a href="viewproduct.php?delete=<?php echo $element['prod_id']; ?>" class="btn btn-danger btn-sm">Delete</a></td> 
                 </tr>
                 <?php
