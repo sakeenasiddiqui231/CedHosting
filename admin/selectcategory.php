@@ -1,5 +1,12 @@
 
 <?php
+session_start();
+
+if(isset($_SESSION['uid']) and $_SESSION['uid'] != ''){
+  if($_SESSION['is_admin'] == 0 ){
+    header('location:../index.php');
+  }
+}
 include('../classes/Product.php');
 $product = new Product();
 

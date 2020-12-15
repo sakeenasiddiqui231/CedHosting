@@ -1,8 +1,14 @@
 <?php
-
-require_once 'classes/Product.php';
+//session_start();
+include_once('classes/Product.php');
 $product = new Product();
-$data = new Config();  
+
+$data = new Config(); 
+
+
+// require_once 'classes/Product.php';
+// $product = new Product();
+// $data = new Config();  
 
 $path = basename($_SERVER['REQUEST_URI']);
 
@@ -46,27 +52,23 @@ $path = 'menu';
 									<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Hosting<i class="caret"></i></a>
 									<ul class="dropdown-menu">
 
-										<?php
-										 $result = $product->sub_category();
-										 foreach($result as $item)
-										 {
-											?>
-											<a href="<?php echo $item['html']; ?>"><?php echo $item['prod_name']; ?>"</a>
+
+									<?php
+											$result = $product->dynamic_elements();
+											foreach($result as $item)
+											{
+												?>
+											<li><a href="catpage.php?id=<?php echo $item['id']; ?>"><?php echo $item['prod_name']; ?></a></li>
 											<?php
-										  }   
-                                          
+											}
+											
+
+
 									?>
 
 
 
-										<li>
-											<a href="linuxhosting.php">Linux hosting</a></li>
-										<li>
-											<a href="wordpresshosting.php">WordPress Hosting</a></li>
-										<li>
-											<a href="windowshosting.php">Windows Hosting</a></li>
-										<li>
-											<a href="cmshosting.php">CMS Hosting</a></li>
+										
 									</ul>			
 								</li>
 								<li <?php if($path == 'pricing.php'){ echo 'class="active"'; } ?>>
@@ -77,8 +79,9 @@ $path = 'menu';
 									<a href="contact.php">Contact</a></li>
 								<li <?php if($path == 'codes.php'){ echo 'class="active"'; } ?>>
 									<a href="codes.php"> <i class="fas fa-shopping-cart" style="color:#585CA7"></i></a></li>
-								<li <?php if($path == 'login.php'){ echo 'class="active"'; } ?>>
-									<a href="login.php">Login</a></li>
+								<?php if (!isset($_SESSION['login'])): ?><li <?php if($path == 'login.php'){ echo 'class="active"'; } ?>>
+								<a href="login.php">Login</a></li><?php endif;?>
+								<?php if(isset($_SESSION['login'])): ?><li><a href="logout1.php">Logout</a></li><?php endif;?>
 							</ul>
 									  
 						</div><!-- /.navbar-collapse -->

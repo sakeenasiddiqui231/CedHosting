@@ -1,10 +1,16 @@
 <?php
-require_once '../config.php';
-session_start();
+require 'config.php';
+
 class Product extends Config  {
 public function sub_category()
 {
         $query = mysqli_query($this->con,"SELECT * FROM `tbl_product` WHERE `prod_parent_id` = '0' AND prod_available='1'");        
+        return $query;
+        
+}
+public function dynamic_elements()
+{
+        $query = mysqli_query($this->con,"SELECT * FROM `tbl_product` WHERE `prod_parent_id` = '1' AND prod_available='1'");        
         return $query;
         
 }
@@ -85,7 +91,7 @@ function insert_product($prod_parent_id, $prod_name, $link, $mon_price, $annual_
             $dquery = mysqli_query($this->con, "INSERT INTO `tbl_product_description`(`prod_id`, `description`, `mon_price`, `annual_price`, `sku`) VALUES ('$id', '$features_encode', '$mon_price', '$annual_price', '$sku')");
             if($dquery) {
                 echo "<script>alert('Product Inserted successfully');</script>";
-                echo "<script>window.location.href = 'selectcategory.php'; </script>";
+                echo "<script>window.location.href = 'viewproduct.php'; </script>";
             } else {
                 echo mysqli_error($this->con);
             }
@@ -161,6 +167,50 @@ public function deleteproduct($id)
         return 0;
     }
  }
+
+
+ public function dynamic_table($id)
+ {
+    $query = "SELECT tbl_product_description.id,prod_id,description,mon_price,annual_price,sku,tbl_product.id,prod_parent_id,prod_name,html,prod_available,prod_launch_date FROM tbl_product_description INNER JOIN tbl_product ON tbl_product_description.prod_id =tbl_product.id WHERE tbl_product.prod_parent_id='$id'";
+    $sql = mysqli_query($this->con, $query);
+    $result = mysqli_num_rows($sql);
+    
+    if($result>0)
+    {
+        return $sql;
+    }
+    else{
+        return 0;
+    }
+ }
+
+public function fetch_name($id)
+{
+    $query = "SELECT `prod_name` FROM tbl_product WHERE `id` = '$id'";
+    $sql = mysqli_query($this->con, $query);
+    $result = mysqli_num_rows($sql);
+    
+    if($result>0)
+    {
+        return $sql;
+    }
+    else{
+        return 0;
+    }
+}
+
+public function cartproduct($id)
+{
+    $query = "SELECT tbl_product.*,tbl_product_description.* FROM tbl_product JOIN tbl_product_description ON tbl_product.id = tbl_product_description.prod_id AND tbl_product.id = $id";
+    $sql = mysqli_query($this->con, $query);
+    if($sql == TRUE)
+    {
+        return $sql;
+    }
+    else{
+        return 0;
+    }
+}
 
 
 

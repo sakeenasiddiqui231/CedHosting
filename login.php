@@ -6,8 +6,8 @@ License: Creative Commons Attribution 3.0 Unported
 License URL: http://creativecommons.org/licenses/by/3.0/
 -->
 <?php
- 
-include 'config.php'; 
+ include 'header.php';
+//include 'config.php'; 
 $data = new Config(); 
  
  
@@ -59,7 +59,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <body>
 	<!---header--->
 		<?php
-   include 'header.php';
+//    include 'header.php';
 
 
 ?>
